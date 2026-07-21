@@ -1,0 +1,169 @@
+import os
+import time
+import sys
+
+# Initialize the availability of the devices using a list
+
+devices = [
+
+"Smart Light A1", "Projector B2", "Thermostat C3", "Security Camera D4",
+
+"Smart Lock E5", "Smoke Detector F6", "Door Sensor G7", "Smart Speaker H8",
+
+"Air Purifier I9", "Water Leak Sensor J10"
+
+]
+
+rented_status = [False] * len(devices) # Corresponding status for each device
+
+def clear_screen():
+
+    """Clears the console screen."""
+
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def display_menu():
+
+    """Displays the main menu options."""
+
+    print("\n--- Smart Home Device Manager ---")
+
+    print("1. View Available Devices")
+
+    print("2. Use a Device")
+
+    print("3. Return a Device")
+
+    print("4. Exit")
+
+    print("--------------------------------")
+
+def view_available_devices():
+
+    """Displays the available devices for use."""
+
+    clear_screen()
+
+    print("\nAvailable Devices:")
+
+    available = False
+
+    for i in range(len(devices)):
+
+        if not rented_status[i]:
+
+            print(f"- {devices[i]}")
+
+            available = True
+
+    if not available:
+
+        print("No devices available.")
+
+    time.sleep(2) # Pause for readability
+
+def use_device():
+
+    """Allows the user to use a device."""
+
+    clear_screen()
+
+    device_name = input("Enter the name of the device you want to use: ").strip()
+
+    if device_name in devices:
+
+        index = devices.index(device_name)
+
+        if not rented_status[index]:
+
+            rented_status[index] = True
+
+            print(f"You are now using '{device_name}'.")
+
+        else:
+
+            print(f"'{device_name}' is already in use.")
+
+    else:
+
+        print("Device not found.")
+
+    time.sleep(2)
+
+def return_device():
+
+    """Allows the user to return a device."""
+
+    clear_screen()
+
+    device_name = input("Enter the name of the device you want to return: ").strip()
+
+    if device_name in devices:
+
+        index = devices.index(device_name)
+
+        if rented_status[index]:
+
+            rented_status[index] = False
+
+            print(f"You have returned '{device_name}'.")
+
+        else:
+
+            print(f"'{device_name}' was not in use.")
+
+    else:
+
+        print("Device not found.")
+
+    time.sleep(2)
+
+def exit_program():
+
+    """Exits the program gracefully."""
+
+    print("Exiting the system. Have a great day!")
+
+    time.sleep(2)
+
+    sys.exit()
+
+def main():
+
+    """Main function to run the smart home device manager."""
+
+    while True:
+
+        clear_screen()
+
+        display_menu()
+
+        choice = input("Enter your choice (1-4): ")
+
+        if choice == '1':
+
+            view_available_devices()
+
+        elif choice == '2':
+
+            use_device()
+
+        elif choice == '3':
+
+            return_device()
+
+        elif choice == '4':
+
+            exit_program()
+
+        else:
+
+            print("Invalid choice. Please select a valid option.")
+
+            time.sleep(2)
+
+# Run the smart home device manager
+
+if __name__ == "__main__":
+
+    main()
